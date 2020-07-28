@@ -8,7 +8,7 @@ import bcrypt
 
 
 def signup(email, password, firstname, lastname):
-    password = bcrypt.hashpw(password, bcrypt.gensalt())
+    password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
     new_customer = User(firstname, lastname, email, password)
     try:
         new_customer.save()
@@ -27,7 +27,7 @@ def signup(email, password, firstname, lastname):
 def login(email, password):
     try:
         user = User.objects.get(emailid=email)
-        if bcrypt.checkpw(password, user.password):
+        if bcrypt.checkpw(password.encode('utf-8'), user.password):
             return json.dumps({
                 "message": "LoginSuccessful",
                 "Authorization": "Bearer %s" % base64.b64encode(
