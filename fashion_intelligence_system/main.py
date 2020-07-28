@@ -14,17 +14,19 @@ mongoengine.connect('Jarvis')
 
 class Signup(Resource):
     def post(self):
-        email_id = request.get_json("email")
-        password = request.get_json("password")
-        first_name = request.get_json("firstname")
-        last_name = request.get_json("lastname")
+        request_data = request.get_json()
+        email_id = request_data["email_id"]
+        password = request_data["password"]
+        first_name = request_data["firstname"]
+        last_name = request_data["lastname"]
         return make_response(signup(email_id, password, first_name, last_name))
 
 
 class Login(Resource):
     def post(self):
-        email_id = request.get_json("email")
-        password = request.get_json("password")
+        request_data = request.get_json()
+        email_id = request_data["email_id"]
+        password = request_data["password"]
         return make_response(login(email_id, password))
 
 
@@ -53,6 +55,7 @@ class UpdateCollection(Resource):
 class DeleteCollection(Resource):
     def delete(self):
         collection_id = request.args.get("id")
+
 
 
 api.add_resource(Signup, "/signup")
