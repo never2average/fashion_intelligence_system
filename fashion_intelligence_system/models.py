@@ -1,13 +1,7 @@
 from mongoengine import Document, EmbeddedDocument, IntField
 from mongoengine import StringField, EmailField, BinaryField
 from mongoengine import URLField, EmbeddedDocumentListField
-
-
-class User(Document):
-    firstname = StringField(max_length=10, min_length=10, required=True)
-    lastname = StringField(max_length=10, min_length=10)
-    emailid = EmailField(max_length=10, min_length=10, required=True)
-    password = BinaryField(required=True)
+from mongoengine import ListField, DictField
 
 
 class Website(Document):
@@ -15,11 +9,22 @@ class Website(Document):
     website_type = StringField(required=True, choices=["M", "E"])
 
 
-class CollectionItem(EmbeddedDocument):
-    pass
+class Product(EmbeddedDocument):
+    item_source = StringField(required=True, choices=["Maga", "Ecom", "Socl"])
+    img_url = URLField(required=True)
+    product_url = URLField(required=True)
+    tags_list = ListField(StringField)
+    sales_data = DictField()
 
 
 class Collection(Document):
-    collection_id = IntField(required=True)
     collection_name = StringField(required=True)
-    collection_list = EmbeddedDocumentListField(CollectionItem)
+    collection_item_list = EmbeddedDocumentListField(Product)
+
+
+class User(Document):
+    firstname = StringField(max_length=15, required=True)
+    lastname = StringField(max_length=15)
+    emailid = EmailField(required=True)
+    password = BinaryField(required=True)
+    my_collections = ListField(Collection)

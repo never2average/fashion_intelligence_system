@@ -9,9 +9,14 @@ import bcrypt
 
 def signup(email, password, firstname, lastname):
     password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-    new_customer = User(firstname, lastname, email, password)
+    new_user = User(
+        firstname=firstname,
+        lastname=lastname,
+        emailid=email,
+        password=password
+    )
     try:
-        new_customer.save()
+        new_user.save()
         return json.dumps({
             "message": "SignupSuccessful",
             "Authorization": "Bearer %s" % base64.b64encode(
