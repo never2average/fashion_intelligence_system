@@ -25,6 +25,6 @@ class Collection(Document):
 class User(Document):
     firstname = StringField(max_length=15, required=True)
     lastname = StringField(max_length=15)
-    emailid = EmailField(required=True)
+    emailid = EmailField(required=True, unique=True)
     password = BinaryField(required=True)
     my_collections = ListField(Collection)
