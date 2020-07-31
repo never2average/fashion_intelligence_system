@@ -4,6 +4,8 @@ from flask_cors import CORS
 import mongoengine
 from authorization import signup, login
 from addwebsite import add_website
+from collection import create_collection, list_collection
+from collection import delete_collection, update_collection
 
 
 app = Flask(__name__)
@@ -39,23 +41,24 @@ class AddWebsite(Resource):
 
 class CreateCollection(Resource):
     def post(self):
-        collection_id = request.args.get("id")
-
+        jwt_token = request.headers.get("Authorization")
+        return make_response(list_collection(jwt_token))
 
 class ListCollection(Resource):
     def get(self):
-        collection_id = request.args.get("id")
+        jwt_token = request.headers.get("Authorization")
+        return make_response(list_collection(jwt_token))
 
 
 class UpdateCollection(Resource):
     def put(self):
-        collection_id = request.args.get("id")
-
+        jwt_token = request.headers.get("Authorization")
+        return make_response(list_collection(jwt_token))
 
 class DeleteCollection(Resource):
     def delete(self):
-        collection_id = request.args.get("id")
-
+        jwt_token = request.headers.get("Authorization")
+        return make_response(list_collection(jwt_token))
 
 
 api.add_resource(Signup, "/signup")

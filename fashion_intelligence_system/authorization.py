@@ -45,3 +45,16 @@ def login(email, password):
             return json.dumps({"message": "LoginFailed"}), 401
     except:
         return json.dumps({"message": "LoginFailed"}), 401
+
+
+def validateToken(token):
+    token = token[6::]
+    try:
+        token = base64.b64decode(token)
+        email = jwt.decode(token, secret_key)["emailID"]
+        try:
+            return True, User.objects.get(emailid=email)
+        except Exception:
+            return False, None
+    except:
+        return False, None
