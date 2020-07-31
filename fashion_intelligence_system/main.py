@@ -9,7 +9,7 @@ from addwebsite import add_website
 app = Flask(__name__)
 cors = CORS(app)
 api = Api(app)
-mongoengine.connect('Jarvis')
+mongoengine.connect('FIS')
 
 
 class Signup(Resource):
