@@ -13,6 +13,9 @@ cors = CORS(app)
 api = Api(app)
 mongoengine.connect('FIS')
 
+@app.route("/")
+def main():
+    return "API is up and running correctly"
 
 class Signup(Resource):
     def post(self):
