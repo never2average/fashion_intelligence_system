@@ -42,7 +42,8 @@ class AddWebsite(Resource):
 class CreateCollection(Resource):
     def post(self):
         jwt_token = request.headers.get("Authorization")
-        return make_response(list_collection(jwt_token))
+        collection_name = request.args.get("collection_name")
+        return make_response(create_collection(jwt_token, collection_name))
 
 class ListCollection(Resource):
     def get(self):
@@ -53,13 +54,17 @@ class ListCollection(Resource):
 class UpdateCollection(Resource):
     def put(self):
         jwt_token = request.headers.get("Authorization")
-        return make_response(list_collection(jwt_token))
+        collection_list = request.get_json()["collection_names"]
+        pid = request.args.get("item_id")
+        return make_response(
+            update_collection(jwt_token, collection_list, pid)
+        )
 
 class DeleteCollection(Resource):
     def delete(self):
         jwt_token = request.headers.get("Authorization")
-        return make_response(list_collection(jwt_token))
-
+        pid = request.args.get("collection_name")
+        return make_response(delete_collection(jwt_token, ))
 
 api.add_resource(Signup, "/signup")
 api.add_resource(Login, "/login")

@@ -1,7 +1,7 @@
-from mongoengine import Document, EmbeddedDocument, IntField
+from mongoengine import Document, IntField, EmbeddedDocument
 from mongoengine import StringField, EmailField, BinaryField
-from mongoengine import URLField, EmbeddedDocumentListField
-from mongoengine import ListField, DictField
+from mongoengine import URLField, ListField, DictField
+from mongoengine import EmbeddedDocumentListField
 
 
 class Website(Document):
@@ -9,7 +9,7 @@ class Website(Document):
     website_type = StringField(required=True, choices=["M", "E"])
 
 
-class Product(EmbeddedDocument):
+class Product(Document):
     item_source = StringField(required=True, choices=["Maga", "Ecom", "Socl"])
     img_url = URLField(required=True)
     product_url = URLField(required=True)
@@ -17,9 +17,9 @@ class Product(EmbeddedDocument):
     sales_data = DictField()
 
 
-class Collection(Document):
+class Collection(EmbeddedDocument):
     collection_name = StringField(required=True)
-    collection_item_list = EmbeddedDocumentListField(Product)
+    collection_item_list = ListField(BinaryField)
 
 
 class User(Document):
@@ -27,4 +27,4 @@ class User(Document):
     lastname = StringField(max_length=15)
     emailid = EmailField(required=True, unique=True)
     password = BinaryField(required=True)
-    my_collections = ListField(Collection)
+    my_collections = EmbeddedDocumentListField(Collection)

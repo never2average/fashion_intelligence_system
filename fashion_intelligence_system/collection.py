@@ -30,7 +30,13 @@ def delete_collection(token, collection_name):
     if not tokenValidator[0]:
         return {"error": "UnauthorizedError"}, 401
     else:
-        pass
+        user = tokenValidator[1]
+        new_coll = []
+        for i in user.my_collections:
+            if i.collection_name != collection_name:
+                new_coll.append(i)
+        user.update(set__my_collections=new_coll)
+        return {"message": "CollectionDeletedSuccesfully"}, 200
 
 
 def update_collection(token, collection_name_list, product_id):
@@ -38,4 +44,13 @@ def update_collection(token, collection_name_list, product_id):
     if not tokenValidator[0]:
         return {"error": "UnauthorizedError"}, 401
     else:
-        pass
+        user = tokenValidator[1]
+        k = list(set(collection_name_list))
+        my_updated_collections = user.my_collections
+        for i in k:
+            if i not in my_updated_collections:
+                create_collection(token, i)
+            my_updated_collections[
+                my_updated_collections.index(i)
+            ].collection_item_list.append(product_id)
+        return {"message": "ItemAddedSuccessfully"}, 200
