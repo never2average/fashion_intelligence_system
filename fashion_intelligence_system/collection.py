@@ -10,7 +10,6 @@ def create_collection(token, collection_name):
     else:
         user = tokenValidator[1]
         c = Collection(collection_name=collection_name)
-        c.save()
         user.update(add_to_set__my_collections=[c])
         return {"message": "Collection Created Successfully"}, 200
 
