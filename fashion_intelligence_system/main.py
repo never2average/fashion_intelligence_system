@@ -66,8 +66,8 @@ class UpdateCollection(Resource):
 class DeleteCollection(Resource):
     def delete(self):
         jwt_token = request.headers.get("Authorization")
-        pid = request.args.get("collection_name")
-        return make_response(delete_collection(jwt_token, ))
+        collection_name = request.args.get("collection_name")
+        return make_response(delete_collection(jwt_token, collection_name))
 
 api.add_resource(Signup, "/signup")
 api.add_resource(Login, "/login")
