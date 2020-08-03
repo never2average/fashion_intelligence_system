@@ -47,12 +47,12 @@ def login(email, password):
 
 
 def validateToken(token):
-    token = token[6::]
-    # try:
-    email = jwt.decode(token, secret_key)["emailID"]
+    token = token[7::]
     try:
-        return True, User.objects.get(emailid=email)
-    except Exception:
+        email = jwt.decode(token, secret_key)["emailID"]
+        try:
+            return True, User.objects.get(emailid=email)
+        except Exception:
+            return False, None
+    except:
         return False, None
-    # except:
-    #     return False, None
