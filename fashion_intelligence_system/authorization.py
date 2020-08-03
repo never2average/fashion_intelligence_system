@@ -48,7 +48,6 @@ def login(email, password):
 def validateToken(token):
     token = token[6::]
     try:
-        token = base64.b64decode(token)
         email = jwt.decode(token, secret_key)["emailID"]
         try:
             return True, User.objects.get(emailid=email)
