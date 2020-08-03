@@ -1,9 +1,9 @@
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium import webdriver
-import pandas as pd
+# import pandas as pd
 from bs4 import BeautifulSoup
-import tweepy
+# import tweepy
 import time
 import requests
 import base64
@@ -40,6 +40,8 @@ while page<=5:
         button.click()
 
         driver.switch_to.window(driver.window_handles[1])
+
+        print(driver.page_source)
 
         soup2 = BeautifulSoup(driver.page_source, 'lxml')
         results2 = soup2.find(id='container')

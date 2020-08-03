@@ -19,11 +19,10 @@ def signup(email, password, firstname, lastname):
         new_user.save()
         return json.dumps({
             "message": "SignupSuccessful",
-            "Authorization": "Bearer %s" % base64.b64encode(
-                jwt.encode({
+            "Authorization": "Bearer %s" % jwt.encode({
                     "emailID": email,
                     "dt": datetime.now().strftime("%s")
-                }, secret_key))
+            }, secret_key).decode('utf-8')
         }), 200
     except:
         return json.dumps({"message": "SignupFailed"}), 401
@@ -35,11 +34,10 @@ def login(email, password):
         if bcrypt.checkpw(password.encode('utf-8'), user.password):
             return json.dumps({
                 "message": "LoginSuccessful",
-                "Authorization": "Bearer %s" % base64.b64encode(
-                    jwt.encode({
+                "Authorization": "Bearer %s" % jwt.encode({
                         "emailID": email,
                         "dt": datetime.now().strftime("%s")
-                    }, secret_key))
+                }, secret_key).decode('utf-8')
             }), 200
         else:
             return json.dumps({"message": "LoginFailed"}), 401
