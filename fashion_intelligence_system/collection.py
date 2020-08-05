@@ -1,4 +1,4 @@
-from models import Collection
+from models import Collection, Product
 import json
 from authorization import validateToken
 
@@ -53,3 +53,32 @@ def update_collection(token, collection_name_list, product_id):
                 my_updated_collections.index(i)
             ].collection_item_list.append(product_id)
         return {"message": "ItemAddedSuccessfully"}, 200
+
+
+def list_collection_items(token, collection_name):
+    tokenValidator = validateToken(token)
+    if not tokenValidator[0]:
+        return {"error": "UnauthorizedError"}, 401
+    else:
+        my_collections = tokenValidator[1].my_collections
+        for i in my_collections:
+            if i.collection_name == collection_name:
+                collection_products = i.collection_item_list
+                break
+        return Product.objects(id__in=collection_products).to_json(), 200
+
+
+def delete_collection_items(token, collection_name, product_id):
+    tokenValidator = validateToken(token)
+    if not tokenValidator[0]:
+        return {"error": "UnauthorizedError"}, 401
+    else:
+        my_collections = tokenValidator[1].my_collections
+        for i in my_collections:
+            if i.collection_name == collection_name:
+                collection_products = i.collection_item_list
+                collection_products.remove(product_id)
+                i.collection_item_list = collection_products
+                break
+        tokenValidator[1].update(set__my_collections=my_collections)
+        return {"message": "CollectionItemDeletedSuccesfully"}, 200

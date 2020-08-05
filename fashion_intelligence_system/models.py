@@ -15,6 +15,8 @@ class Product(Document):
     product_url = URLField(required=True)
     tags_list = ListField(StringField)
     sales_data = DictField()
+    product_description = StringField()
+    trending_score = IntField(required=True, default=0)
 
 
 class Collection(EmbeddedDocument):

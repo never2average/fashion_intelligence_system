@@ -6,6 +6,7 @@ from authorization import signup, login
 from addwebsite import add_website
 from collection import create_collection, list_collection
 from collection import delete_collection, update_collection
+from collection import list_collection_items, delete_collection_items
 
 
 app = Flask(__name__)
@@ -69,6 +70,25 @@ class DeleteCollection(Resource):
         collection_name = request.args.get("collection_name")
         return make_response(delete_collection(jwt_token, collection_name))
 
+class ListCollectionItems(Resource):
+    def get(self):
+        jwt_token = request.headers.get("Authorization")
+        collection_name = request.args.get("collection_name")
+        return make_response(
+            list_collection_items(jwt_token, collection_name)
+        )
+
+
+class DeleteCollectionItems(Resource):
+    def delete(self):
+        jwt_token = request.headers.get("Authorization")
+        collection_name = request.args.get("collection_name")
+        product_id = request.args.get("product_id")
+        return make_response(
+            delete_collection_items(jwt_token, collection_name, product_id)
+        )
+
+
 api.add_resource(Signup, "/signup")
 api.add_resource(Login, "/login")
 api.add_resource(AddWebsite, "/toscrape")
@@ -76,5 +96,7 @@ api.add_resource(CreateCollection, "/collections/create")
 api.add_resource(ListCollection, "/collections/list")
 api.add_resource(UpdateCollection, "/collections/update")
 api.add_resource(DeleteCollection, "/collections/delete")
+api.add_resource(ListCollectionItems, "/collections/items/list")
+api.add_resource(DeleteCollectionItems, "/collections/items/delete")
 if __name__ == "__main__":
     app.run(port=5000, debug=True)
