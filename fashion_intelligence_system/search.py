@@ -11,6 +11,7 @@ def search_metadata(search_id):
 
 
 def search_results(search_id, pageno):
+    pageno = int(pageno)
     fobj = open(str(search_id)+"_results.json")
     return json.dumps(
         json.load(fobj)[(pageno-1)*10:pageno*10]
