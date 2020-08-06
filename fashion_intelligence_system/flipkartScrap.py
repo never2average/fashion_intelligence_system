@@ -99,8 +99,12 @@ df = pd.DataFrame(
 ) 
 df["item_source"] = "Ecom"
 result = df.to_json(orient="records")
+result = json.dumps(result)
 fobj = open("results.json", "w")
 json.dump(result, fobj)
+
+#Fake ML
+
 
 # df.to_csv('flipkart_scrap.csv', index=False, encoding='utf-8')
 
