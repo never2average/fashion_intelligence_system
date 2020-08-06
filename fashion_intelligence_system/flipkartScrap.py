@@ -16,6 +16,9 @@ productsURL = []
 productName = []
 productRating = []
 productNoRating = []
+productNoRatings = []
+productNoReviews = []
+pagesURL = []
 
 while page<=1:
     options = Options() 
@@ -27,6 +30,13 @@ while page<=1:
 
     soup = BeautifulSoup(driver.page_source, 'lxml')
     results = soup.find(id='container')
+
+    for column in results.findAll(class_='_3dqZjq'):
+        column = str(column)
+        startIndex = column.find('href="')
+        endIndex = column.find('" rel',startIndex)
+        pageURL = 'www.flipkart.com' + str((column[startIndex+6:endIndex]).strip())
+        pagesURL.append(pageURL)
 
     for column in results.findAll(class_='_3ZJShS _31bMyl'):
         column = str(column)
@@ -66,12 +76,35 @@ while page<=1:
 
 productRatingMean = round(sum(productRating)/len(productRating),2)
 productRating = [x if x != 0 else productRatingMean for x in productRating]
+for i in productNoRating:
+    if i != 'NA':
+        j = i.split()
+        productNoRatings.append(int(j[0].replace(',', '')))
+        productNoReviews.append(int(j[3].replace(',', '')))
+    else:
+        productNoRatings.append(0)
+        productNoReviews.append(0)
+
+tagList = ["" for i in range(len(productName))]
+
 df = pd.DataFrame(
     {
-        'Product Name': productName, 
-        'Ratings & Reviews': productNoRating, 
-        'Rating': productRating,
-        'Image URL': productsURL,
+        'product_name': productName,
+        'rating': productRating,
+        'total_ratings': productNoRatings,
+        'total_reviews': productNoReviews, 
+        'image_URL': productsURL,
+        'page_URL': pagesURL,
+        'description': productName,
+        'tag_list': tagList
     }
 ) 
-df.to_csv('flipkart_scrap.csv', index=False, encoding='utf-8')
+df["item_source"] = "Ecom"
+result = df.to_json(orient="records")
+fobj = open("results.json", "w")
+json.dump(fobj, result)
+
+# df.to_csv('flipkart_scrap.csv', index=False, encoding='utf-8')
+
+
+
