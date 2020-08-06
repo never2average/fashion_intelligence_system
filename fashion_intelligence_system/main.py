@@ -7,7 +7,8 @@ from addwebsite import add_website
 from collection import create_collection, list_collection
 from collection import delete_collection, update_collection
 from collection import list_collection_items, delete_collection_items
-
+from product_connectors import product_details
+from search import search, search_metadata, search_results
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -70,6 +71,7 @@ class DeleteCollection(Resource):
         collection_name = request.args.get("collection_name")
         return make_response(delete_collection(jwt_token, collection_name))
 
+
 class ListCollectionItems(Resource):
     def get(self):
         jwt_token = request.headers.get("Authorization")
@@ -89,8 +91,36 @@ class DeleteCollectionItems(Resource):
         )
 
 
+class ProductDetails(Resource):
+    def get(self):
+        product_id = request.args.get("product_id")
+        amount= request.args.get("amount")
+        return make_response(product_details(product_id, amount))
+
+
+class CreateSearch(Resource):
+    def get(self):
+        search_text = request.args.get("text")
+        result_type = request.args.get("result_type")
+        return make_response(search(search_text, result_type))
+
+
+class SearchMetadata(Resource):
+    def get(self):
+        search_id = request.args.get("search_id")
+        return make_response(search_metadata(search_id))
+
+
+class SearchResults(Resource):
+    def get(self):
+        search_id = request.args.get("search_id")
+        pageno = request.args.get("pageno")
+        return make_response(search_results(search_id, pageno))
+
+
 api.add_resource(Signup, "/signup")
 api.add_resource(Login, "/login")
+api.add_resource(ProductDetails, "/product/details")
 api.add_resource(AddWebsite, "/toscrape")
 api.add_resource(CreateCollection, "/collections/create")
 api.add_resource(ListCollection, "/collections/list")
@@ -98,5 +128,8 @@ api.add_resource(UpdateCollection, "/collections/update")
 api.add_resource(DeleteCollection, "/collections/delete")
 api.add_resource(ListCollectionItems, "/collections/items/list")
 api.add_resource(DeleteCollectionItems, "/collections/items/delete")
+api.add_resource(CreateSearch, "/search_db")
+api.add_resource(SearchMetadata, "/results/metadata")
+api.add_resource(SearchResults, "/results")
 if __name__ == "__main__":
     app.run(port=5000, debug=True)

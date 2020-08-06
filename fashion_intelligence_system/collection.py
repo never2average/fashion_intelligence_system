@@ -82,3 +82,7 @@ def delete_collection_items(token, collection_name, product_id):
                 break
         tokenValidator[1].update(set__my_collections=my_collections)
         return {"message": "CollectionItemDeletedSuccesfully"}, 200
+
+
+def export_collection(token):
+    pass

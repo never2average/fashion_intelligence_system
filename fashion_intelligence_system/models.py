@@ -1,7 +1,7 @@
 from mongoengine import Document, IntField, EmbeddedDocument
 from mongoengine import StringField, EmailField, BinaryField
 from mongoengine import URLField, ListField, DictField
-from mongoengine import EmbeddedDocumentListField
+from mongoengine import EmbeddedDocumentListField, DecimalField
 
 
 class Website(Document):
@@ -14,9 +14,12 @@ class Product(Document):
     img_url = URLField(required=True)
     product_url = URLField(required=True)
     tags_list = ListField(StringField)
-    sales_data = DictField()
+    product_name = StringField()
     product_description = StringField()
     trending_score = IntField(required=True, default=0)
+    product_ratings = DecimalField(required=True, default=0)
+    product_num_ratings = IntField()
+    product_num_reviews = IntField()
 
 
 class Collection(EmbeddedDocument):
