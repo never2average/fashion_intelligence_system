@@ -20,7 +20,7 @@ def search(search_text, result_type):
     search_text = ''.join([x for x in search_text if x==" " or x.isalpha()])
     grams = make_ngrams(search_text)
     p = json.loads(Product.objects(item_source="Ecom").to_json())
-    json.dump(open("/home/ubuntu/demosearch_metadata.json"),p)
+    json.dump(p, open("/home/ubuntu/demosearch_metadata.json"))
     return json.dumps({"id": "demosearch", "pages": len(p)}), 200
 
 
