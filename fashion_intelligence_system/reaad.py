@@ -1,11 +1,11 @@
-import mongoengine
+import pymongo
 from models import Product
 import json
 
-mongoengine.connect("FIS")
+c = pymongo.MongoClient()
+coll = c.FIS.product
 
 f = open("demosearch_results.json")
 j = json.load(f)
 
-for k in j:
-    Product(**k).save() 
+coll.insert_many(j)
