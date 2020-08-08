@@ -19,12 +19,9 @@ def make_ngrams(word, min_size=2, prefix_only=False):
 def search(search_text, result_type):
     search_text = ''.join([x for x in search_text if x==" " or x.isalpha()])
     grams = make_ngrams(search_text)
-    p = Product.object(item_source="Ecom").to_json()
-    json.dump(
-        open("/home/ubuntu/demosearch_metadata.json"),
-        json.loads(p)
-    )
-    return json.dumps({"id": "demosearch"}), 200
+    p = json.loads(Product.object(item_source="Ecom").to_json())
+    json.dump(open("/home/ubuntu/demosearch_metadata.json"),p)
+    return json.dumps({"id": "demosearch", "pages": len(p)}), 200
 
 
 def search_metadata(search_id):
