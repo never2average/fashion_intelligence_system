@@ -1,6 +1,29 @@
 import json
+from models import Product
+
+def make_ngrams(word, min_size=2, prefix_only=False):
+    length = len(word)
+    size_range = range(min_size, max(length, min_size) + 1)
+    if prefix_only:
+        return [
+            word[0:size]
+            for size in size_range
+        ]
+    return list(set(
+        word[i:i + size]
+        for size in size_range
+        for i in range(0, max(0, length - size) + 1)
+    ))
+
 
 def search(search_text, result_type):
+    search_text = ''.join([x for x in search_text if x==" " or x.isalpha()])
+    grams = make_ngrams(search_text)
+    p = Product.object(item_source="Ecom").to_json()
+    json.dump(
+        open("/home/ubuntu/demosearch_metadata.json"),
+        json.loads(p)
+    )
     return json.dumps({"id": "demosearch"}), 200
 
 
