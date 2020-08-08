@@ -13,7 +13,7 @@ from search import search, search_metadata, search_results
 app = Flask(__name__)
 cors = CORS(app)
 api = Api(app)
-mongoengine.connect('FIS')
+mongoengine.connect("FIS")
 
 @app.route("/")
 def main():
