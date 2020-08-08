@@ -1,3 +1,4 @@
+from math import ceil
 import json
 from models import Product
 
@@ -21,7 +22,7 @@ def search(search_text, result_type):
     grams = make_ngrams(search_text)
     p = json.loads(Product.objects(item_source="Ecom").to_json())
     json.dump(p, open("/home/ubuntu/demosearch_results.json", "w"))
-    return json.dumps({"id": "demosearch", "pages": len(p)}), 200
+    return json.dumps({"id": "demosearch", "pages": ceil(len(p)/10)}), 200
 
 
 def search_metadata(search_id):
