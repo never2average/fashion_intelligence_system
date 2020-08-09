@@ -2,8 +2,7 @@
 
 [![Python](https://img.shields.io/badge/python-2.7%2C%203.5%2C%203.6--dev-blue.svg)]()
 
-The code for the back-end of the fashion intelligence system for Flipkart GRID Challenge
-
+This is the backend repository for the fashion intelligence system of flipkart grid challenge which was built using the flask backend framework for python and MongoDB document-based database. 
 
 
 ## Getting started
