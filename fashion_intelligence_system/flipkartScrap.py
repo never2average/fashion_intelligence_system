@@ -18,7 +18,7 @@ productNoRatings = []
 productNoReviews = []
 pagesURL = []
 
-while page<=1:
+while page<=5:
     options = Options() 
     options.headless = True
     driver = webdriver.Chrome(options=options)
@@ -50,6 +50,9 @@ while page<=1:
         try:
             button.click()
         except:
+            productName.append('NA')
+            productNoRating.append('NA')
+            productRating.append(0)
             continue
 
         driver.switch_to.window(driver.window_handles[i])
@@ -110,6 +113,5 @@ json.dump(result, fobj)
 
 
 # df.to_csv('flipkart_scrap.csv', index=False, encoding='utf-8')
-
 
 
