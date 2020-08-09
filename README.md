@@ -5,6 +5,12 @@
 This is the backend repository for the fashion intelligence system of flipkart grid challenge which was built using the flask backend framework for python and MongoDB document-based database. 
 
 
+## Hosted API
+
+In order to use the hosted version of the API endpoints created in this project, you can view the documentation of the [postman collection](https://documenter.getpostman.com/view/5663727/T1LJkoh7)
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/a2e5616744cec90c4f96)
+
 ## Getting started
 
 Installation instructions are only for debian based systems:
