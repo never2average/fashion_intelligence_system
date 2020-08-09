@@ -7,7 +7,7 @@ from addwebsite import add_website
 from collection import create_collection, list_collection
 from collection import delete_collection, update_collection
 from collection import list_collection_items, delete_collection_items
-from product_connectors import product_details
+from product_connectors import product_details, similar_products
 from search import search, search_metadata, search_results
 
 app = Flask(__name__)
@@ -117,6 +117,12 @@ class SearchResults(Resource):
         pageno = request.args.get("pageno")
         return make_response(search_results(search_id, pageno))
 
+class SimilarProducts(Resource):
+    def get(self):
+        search_id = request.args.get("search_id")
+        product_id = request.args.get("product_id")
+        return make_response(similar_products(search_id, product_id))
+
 
 api.add_resource(Signup, "/signup")
 api.add_resource(Login, "/login")
@@ -131,5 +137,6 @@ api.add_resource(DeleteCollectionItems, "/collections/items/delete")
 api.add_resource(CreateSearch, "/search_db")
 api.add_resource(SearchMetadata, "/results/metadata")
 api.add_resource(SearchResults, "/results")
+api.add_resource(SimilarProducts, "/product/similar")
 if __name__ == "__main__":
     app.run(port=5000, debug=True)
