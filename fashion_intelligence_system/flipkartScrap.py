@@ -47,7 +47,10 @@ while page<=1:
     for a in results.findAll(class_='_2mylT6'):
         driver.switch_to.window(driver.window_handles[0])
         button = driver.find_element_by_link_text(a.text)
-        button.click()
+        try:
+            button.click()
+        except:
+            continue
 
         driver.switch_to.window(driver.window_handles[i])
 
