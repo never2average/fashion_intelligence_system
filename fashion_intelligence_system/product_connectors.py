@@ -43,8 +43,11 @@ def similar_products(search_id, product_id):
     main_str = text_to_vector(main_i["product_description"])
     for i in data:
         new = [0,0,0,0]
-        new[0] = i["product_ratings"]*i["product_num_ratings"]
-        new[0] = new[0]/i["product_num_reviews"]
+        try:
+            new[0] = i["product_ratings"]*i["product_num_ratings"]
+            new[0] = new[0]/i["product_num_reviews"]
+        except:
+            new[0] = 0
         new[1] = hash(tuple(i["tags_list"]))
         new[2] = get_cosine(
             main_str, 
