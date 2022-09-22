@@ -1,5 +1,7 @@
 # Fashion Intelligence System Backend ![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)
 
+### Documentation Added to GitBook
+
 [![Python](https://img.shields.io/badge/python-2.7%2C%203.5%2C%203.6--dev-blue.svg)]()
 
 This is the backend repository for the fashion intelligence system of flipkart grid challenge which was built using the flask backend framework for python and MongoDB document-based database. 
