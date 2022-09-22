@@ -1,6 +1,6 @@
 # Fashion Intelligence System Backend ![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)
 
-### Documentation Added to GitBook ![Link](https://fashion-intelligence-system.gitbook.io/fashion-intelligence-system-backend/)
+### Documentation Added to GitBook [Link](https://fashion-intelligence-system.gitbook.io/fashion-intelligence-system-backend/)
 
 [![Python](https://img.shields.io/badge/python-2.7%2C%203.5%2C%203.6--dev-blue.svg)]()
 
